@@ -19,6 +19,48 @@ for (salesdata in all_sales){
 # Use a tidyverse join to join all the data together into one file
 # called sales_data, then run the rest of the code
 
+## Not the best way I believe but it worked.\
+# I could not join more then three data frame at the time, that is why
+# I did these many steps. 
+sales_data1 <- full_join(dataset_1, dataset_2, dataset_3,
+                       by = c("day", "month", "year", "pizza", "number"))
+
+sales_data2 <- full_join(dataset_4, dataset_5, dataset_6,
+                         by = c("day", "month", "year", "pizza", "number"))
+
+sales_data3 <- full_join(dataset_7, dataset_8, dataset_9,
+                         by = c("day", "month", "year", "pizza", "number"))
+
+
+sales_data4 <- full_join(dataset_10, dataset_11, dataset_12,
+                         by = c("day", "month", "year", "pizza", "number"))
+
+
+sales_data5 <- full_join(dataset_13, dataset_14, dataset_15,
+                         by = c("day", "month", "year", "pizza", "number"))
+
+sales_data6 <- full_join(dataset_15, datafile,
+                         by = c("day", "month", "year", "pizza", "number"))
+
+sales_data7 <- full_join(sales_data1, sales_data2, sales_data3, 
+                        by = c("day", "month", "year", "pizza", "number"))
+
+sales_data8 <- full_join(sales_data4, sales_data5, sales_data6, 
+                         by = c("day", "month", "year", "pizza", "number"))
+
+sales_data  <- full_join(sales_data7, sales_data8, 
+                         by = c("day", "month", "year", "pizza", "number"))
+
+
+?get
+?full_join
+
+# Loop, easier and more pratical way to do it. 
+sales_data <-dataset_1 
+for (i in 2:length(all_sales)) {
+  get(paste("dataset_", i, sep = "")) -> newdata
+  sales_data <- full_join(sales_data, newdata)
+}
 
 
 ########################################
@@ -54,3 +96,4 @@ sales_ave_daily <- sales_data %>%
 
 ggplot(data = sales_ave_daily, aes(x = date, y = ave_sales, fill = pizza))+
   geom_bar(stat = "identity", position = "dodge")
+
